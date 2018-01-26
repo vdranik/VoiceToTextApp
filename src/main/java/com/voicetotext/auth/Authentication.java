@@ -12,10 +12,9 @@ import java.net.URL;
 import java.util.stream.Collectors;
 
 @Component
-@PropertySource("classpath:application.properties")
 public class Authentication {
   private static final String FETCH_TOKEN_URI = "https://api.cognitive.microsoft.com/sts/v1.0/issueToken";
-  private String subscriptionKey= "a3bfe1f715454a7d9a1cec634fee3114";
+  private String subscriptionKey = "a3bfe1f715454a7d9a1cec634fee3114";
   private String token;
 
   public Authentication() {
@@ -54,10 +53,5 @@ public class Authentication {
       token = null;
       System.out.format("Failed to fetch an access token. Details: %s", e.getMessage());
     }
-  }
-
-  @Bean
-  public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
-    return new PropertySourcesPlaceholderConfigurer();
   }
 }
