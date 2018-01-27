@@ -1,5 +1,6 @@
-package com.voicetotext.repository;
+package com.voicetotext.dao.impl;
 
+import com.voicetotext.dao.ATDao;
 import com.voicetotext.entity.AudioText;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class AudioTextRepository {
+public class ATDaoImpl implements ATDao {
 
     @PersistenceContext
     private EntityManager entityManager;

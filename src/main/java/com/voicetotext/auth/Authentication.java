@@ -1,8 +1,5 @@
 package com.voicetotext.auth;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;

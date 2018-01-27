@@ -1,6 +1,6 @@
 package com.voicetotext.conf;
 
-public class AudioTextConfigurationProps {
+public class ATConfigurationProps {
 
   public static enum RecognitionMode { Interactive, Conversation, Dictation }
   public static enum OutputFormat { Simple, Detailed }

@@ -1,10 +1,10 @@
-package com.voicetotext.controller;
+package com.voicetotext.controller.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.voicetotext.auth.Authentication;
-import com.voicetotext.conf.AudioTextConfigurationProps;
+import com.voicetotext.controller.ATController;
 import com.voicetotext.entity.AudioText;
-import com.voicetotext.service.AudioTextService;
+import com.voicetotext.service.ATService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -16,49 +16,51 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Collectors;
 
+import static com.voicetotext.conf.ATConfigurationProps.*;
+
 @Controller
-public class AudioTextController {
+public class ATControllerImpl implements ATController {
 
     private static final String REQUEST_URI = "https://speech.platform.bing.com/speech/recognition/%s/cognitiveservices/v1";
     private static final String PARAMETERS = "language=%s&format=%s";
 
-    private AudioTextConfigurationProps.RecognitionMode mode = AudioTextConfigurationProps.RecognitionMode.Interactive;
-    private AudioTextConfigurationProps.Language language = AudioTextConfigurationProps.Language.en_US;
-    private AudioTextConfigurationProps.OutputFormat format = AudioTextConfigurationProps.OutputFormat.Simple;
+    // Default conf
+    private RecognitionMode mode = RecognitionMode.Interactive;
+    private Language language = Language.en_US;
+    private OutputFormat format = OutputFormat.Simple;
 
     @Autowired
-    private AudioTextService audioTextService;
+    private ATService atService;
 
     @Autowired
     private ObjectMapper mapper;
     private final Authentication auth;
 
-    @Autowired
-    public AudioTextController (Authentication auth){
+    public ATControllerImpl(Authentication auth){
         this.auth = auth;
     }
 
-    public AudioTextConfigurationProps.RecognitionMode getMode() {
+    public RecognitionMode getMode() {
         return mode;
     }
 
-    public void setMode(AudioTextConfigurationProps.RecognitionMode mode) {
+    public void setMode(RecognitionMode mode) {
         this.mode = mode;
     }
 
-    public AudioTextConfigurationProps.Language getLanguage() {
+    public Language getLanguage() {
         return language;
     }
 
-    public void setLanguage(AudioTextConfigurationProps.Language language) {
+    public void setLanguage(Language language) {
         this.language = language;
     }
 
-    public AudioTextConfigurationProps.OutputFormat getFormat() {
+    public OutputFormat getFormat() {
         return format;
     }
 
-    public void setFormat(AudioTextConfigurationProps.OutputFormat format) {
+    public void setFormat(OutputFormat format) {
         this.format = format;
     }
 
@@ -97,7 +99,7 @@ public class AudioTextController {
         if(response != null && !response.isEmpty()){
             AudioText audioText = new AudioText();
             audioText = mapper.readValue(response, AudioText.class);
-            audioTextService.saveAudio(audioText);
+            atService.saveAudio(audioText);
         }
 
         return response;
